@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using HaoBlogApi.Data;
+using HaoBlogApi.Repos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,35 +15,44 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace HaoBlogApi {
-    public class Startup {
-        public Startup (IConfiguration configuration) {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services) {
-            services.AddDbContext<HaoBlogApiContext> (opt => opt.UseSqlServer (Configuration.GetConnectionString ("CommanderConnection")));
-            services.AddControllers ();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
-            }
-
-            app.UseHttpsRedirection ();
-
-            app.UseRouting ();
-
-            app.UseAuthorization ();
-
-            app.UseEndpoints (endpoints => {
-                endpoints.MapControllers ();
-            });
-        }
+namespace HaoBlogApi
+{
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
+    {
+      Configuration = configuration;
     }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddDbContext<HaoBlogApiContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CommanderConnection")));
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+      services.AddScoped<IRoleRepo, RoleRepo>();
+      services.AddControllers();
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+
+      app.UseHttpsRedirection();
+
+      app.UseRouting();
+
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
+    }
+  }
 }
