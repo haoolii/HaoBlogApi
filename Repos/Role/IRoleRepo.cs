@@ -9,6 +9,12 @@ namespace HaoBlogApi.Repos
 
     IEnumerable<Role> GetAllRoles();
 
+    Role GetRoleById(int id);
+
     void CreateRole(Role role);
+
+    void UpdateRole(Role role);
+
+    void DeleteRole(Role role);
   }
 }

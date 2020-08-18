@@ -23,14 +23,33 @@ namespace HaoBlogApi.Repos
       _context.Roles.Add(role);
     }
 
+    public void DeleteRole(Role role)
+    {
+      if (role == null)
+      {
+        throw new ArgumentNullException(nameof(role));
+      }
+      _context.Roles.Remove(role);
+    }
+
     public IEnumerable<Role> GetAllRoles()
     {
       return _context.Roles.ToList();
     }
 
+    public Role GetRoleById(int id)
+    {
+      return _context.Roles.FirstOrDefault(r => r.Id == id);
+    }
+
     public bool SaveChanges()
     {
       return (_context.SaveChanges() >= 0);
+    }
+
+    public void UpdateRole(Role role)
+    {
+      // throw new NotImplementedException();
     }
   }
 }
