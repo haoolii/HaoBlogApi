@@ -32,6 +32,8 @@ namespace HaoBlogApi
       services.AddDbContext<HaoBlogApiContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CommanderConnection")));
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddScoped<IRoleRepo, RoleRepo>();
+      services.AddScoped<IPostRepo, PostRepo>();
+      services.AddScoped<IUserRepo, UserRepo>();
       services.AddControllers();
     }
 

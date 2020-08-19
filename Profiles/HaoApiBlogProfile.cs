@@ -13,6 +13,7 @@ namespace HaoBlogApi.Profiles
       // Source -> Target
       CreateMap<Role, RoleDto>();
       CreateMap<RoleDto, Role>();
+      CreateMap<UserDto, User>();
     }
   }
 }
